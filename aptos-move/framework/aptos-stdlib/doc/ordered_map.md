@@ -253,7 +253,7 @@ New key used in replace_key_inplace doesn't respect the order
 
 ## Function `new`
 
-Creates a new empty OrderedMap, using default (SortedVectorMap) implementation.
+Create a new empty OrderedMap, using default (SortedVectorMap) implementation.
 
 
 <pre><code><b>public</b> <b>fun</b> <a href="ordered_map.md#0x1_ordered_map_new">new</a>&lt;K, V&gt;(): <a href="ordered_map.md#0x1_ordered_map_OrderedMap">ordered_map::OrderedMap</a>&lt;K, V&gt;
@@ -531,7 +531,7 @@ Returns whether map contains a given key.
 
 ## Function `replace_key_inplace`
 
-Changes the key, with keeping the same value attached to it
+Changes the key, while keeping the same value attached to it
 Aborts with EKEY_NOT_FOUND if <code>old_key</code> doesn't exist.
 Aborts with ENEW_KEY_NOT_IN_ORDER if <code>new_key</code> doesn't keep the order <code>old_key</code> was in.
 
