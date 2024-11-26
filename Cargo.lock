@@ -3910,6 +3910,7 @@ dependencies = [
  "anyhow",
  "aptos-crypto",
  "aptos-drop-helper",
+ "aptos-experimental-layered-map",
  "aptos-experimental-runtimes",
  "aptos-logger",
  "aptos-metrics-core",
