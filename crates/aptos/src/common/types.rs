@@ -1164,7 +1164,7 @@ pub struct MovePackageDir {
 
     /// ...or --compiler COMPILER_VERSION
     /// Specify the version of the compiler.
-    /// Defaults to the latest stable compiler version
+    /// Defaults to the latest stable compiler version (at least 2)
     #[clap(long, value_parser = clap::value_parser!(CompilerVersion),
            alias = "compiler",
            default_value = LATEST_STABLE_COMPILER_VERSION,
@@ -1175,7 +1175,7 @@ pub struct MovePackageDir {
 
     /// ...or --language LANGUAGE_VERSION
     /// Specify the language version to be supported.
-    /// Defaults to the latest stable language version
+    /// Defaults to the latest stable language version (at least 2)
     #[clap(long, value_parser = clap::value_parser!(LanguageVersion),
            alias = "language",
            default_value = LATEST_STABLE_LANGUAGE_VERSION,
