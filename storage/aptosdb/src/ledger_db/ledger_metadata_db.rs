@@ -269,6 +269,20 @@ impl LedgerMetadataDb {
     /// Returns the corresponding block height for a given version.
     pub(crate) fn get_block_height_by_version(&self, version: Version) -> Result<u64> {
         let mut iter = self.db.iter::<BlockByVersionSchema>()?;
+        // print some samples of
+        iter.seek_to_first();
+        let mut i = 0;
+        while i < 10 {
+            let (block_version, block_height) = iter
+                .next()
+                .transpose()?
+                .ok_or_else(|| anyhow!("Block is not found at version {version}, maybe pruned?"))?;
+            println!(
+                "block_version: {}, block_height: {}",
+                block_version, block_height
+            );
+            i += 1;
+        }
 
         iter.seek_for_prev(&version)?;
         let (_, block_height) = iter

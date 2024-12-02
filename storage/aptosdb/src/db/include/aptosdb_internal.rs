@@ -265,6 +265,7 @@ impl AptosDB {
             version <= synced_version,
             "Requested version {version} > synced version {synced_version}",
         );
+        let min_version = self.ledger_pruner.get_min_viable_version();
 
         if !self.skip_index_and_usage {
             let (first_version, event_index, block_height) = self
