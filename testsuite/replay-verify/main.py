@@ -548,6 +548,10 @@ if __name__ == "__main__":
     config = ReplayConfig(network)
     worker_cnt = args.worker_cnt if args.worker_cnt else config.pvc_number * 7
     range_size = args.range_size if args.range_size else config.range_size
+    
+    if args.end is not None:
+        assert args.end <= end, "end version is out of range"
+    
     scheduler = ReplayScheduler(
         run_id,
         start if args.start is None else args.start,

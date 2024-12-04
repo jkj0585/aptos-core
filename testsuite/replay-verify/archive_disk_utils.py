@@ -181,7 +181,7 @@ def delete_disk(disk_client, project, zone, disk_name):
 # Creating disk from import snapshots
 # require getting a hold of the kubectrl of the cluster
 # eg: gcloud container clusters get-credentials replay-on-archive --region us-central1 --project replay-verify
-def create_disk_pv_pvc_from_snapshot(
+def create_final_snapshot(
     project,
     zone,
     cluster_name,
@@ -317,7 +317,7 @@ def create_persistent_volume(
                 fs_type="xfs",
                 read_only=read_only,
             ),
-            persistent_volume_reclaim_policy="Retain",  # this is to delete the PV and disk separately to speed up pv deletion
+            persistent_volume_reclaim_policy="Delete",  # this is to delete the PV and disk separately to speed up pv deletion
             storage_class_name="ssd-data-xfs",
         ),
     )
@@ -350,7 +350,8 @@ def create_one_pvc_from_snapshot(pvc_name, snapshot_name, namespace, label):
         "metadata": {
             "name": f"{pvc_name}",
             "annotations": {
-                "volume.kubernetes.io/storage-provisioner": "pd.csi.storage.gke.io"
+                "volume.kubernetes.io/storage-provisioner": "pd.csi.storage.gke.io",
+                "volume.beta.kubernetes.io/gce-pd-name": f"{pvc_name}",
             },
             "labels": {"run": f"{label}"},
         },
@@ -472,7 +473,7 @@ def create_repair_disk_and_its_snapshot(
     # Execute tasks in parallel
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [
-            executor.submit(create_disk_pv_pvc_from_snapshot, *task) for task in tasks
+            executor.submit(create_final_snapshot, *task) for task in tasks
         ]
         for future in concurrent.futures.as_completed(futures):
             try:
