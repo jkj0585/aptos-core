@@ -106,6 +106,7 @@ jobs:
           fi
 
           eval $CMD
+        timeout-minutes: 120 
       # This is in case user manually cancel the step above, we still want to cleanup the resources
       - name: Post-run cleanup
         env:
