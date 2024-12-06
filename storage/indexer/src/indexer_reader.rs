@@ -148,7 +148,7 @@ impl IndexerReader for IndexerReaders {
     ) -> anyhow::Result<Vec<IndexedTransactionSummary>> {
         if let Some(db_indexer_reader) = &self.db_indexer_reader {
             // TODO: May be we need a new config flag to enable this?
-            if db_indexer_reader.indexer_db.transaction_enabled() {
+            if db_indexer_reader.indexer_db.transaction_summaries_enabled() {
                 return Ok(db_indexer_reader.get_account_all_transaction_summaries(
                     address,
                     start_version,
@@ -157,7 +157,7 @@ impl IndexerReader for IndexerReaders {
                     ledger_version,
                 )?);
             } else {
-                anyhow::bail!("Interal transaction by account index is not enabled")
+                anyhow::bail!("Interal transaction summaries by account index is not enabled")
             }
         }
         anyhow::bail!("DB indexer reader is not available")

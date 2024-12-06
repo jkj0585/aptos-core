@@ -53,7 +53,7 @@ impl InternalIndexerDBService {
 
         // TODO: Enable transaction summaries here after the feature is complete
         let internal_indexer_db_config =
-            InternalIndexerDBConfig::new(true, false, true, true, 0, true, 10_000);
+            InternalIndexerDBConfig::new(true, true, true, true, 0, true, 10_000);
         Some(InternalIndexerDB::new(arc_db, internal_indexer_db_config))
     }
 

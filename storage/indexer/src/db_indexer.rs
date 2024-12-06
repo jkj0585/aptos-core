@@ -133,6 +133,10 @@ impl InternalIndexerDB {
         self.config.enable_transaction
     }
 
+    pub fn transaction_summaries_enabled(&self) -> bool {
+        self.config.enable_transaction_summaries
+    }
+
     pub fn statekeys_enabled(&self) -> bool {
         self.config.enable_statekeys
     }
