@@ -142,7 +142,7 @@ module aptos_framework::transaction_validation {
     ) {
         // Question: Is this logic correct?
         let success = nonce_validation::check_and_insert_nonce(sender, nonce, txn_expiration_time);
-        assert!(!success, error::invalid_argument(PROLOGUE_NONCE_ALREADY_USED));
+        assert!(success, error::invalid_argument(PROLOGUE_NONCE_ALREADY_USED));
 
         if (!features::transaction_simulation_enhancement_enabled() ||
             !skip_auth_key_check(is_simulation, &txn_authentication_key)) {
