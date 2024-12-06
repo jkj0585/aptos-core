@@ -115,8 +115,6 @@ pub fn convert_prologue_error(
                 (INVALID_ARGUMENT, ESEQUENCE_NUMBER_TOO_OLD) => StatusCode::SEQUENCE_NUMBER_TOO_OLD,
                 // Sequence number too new
                 (INVALID_ARGUMENT, ESEQUENCE_NUMBER_TOO_NEW) => StatusCode::SEQUENCE_NUMBER_TOO_NEW,
-                // Nonce in orderless transaction is already used in a previous transaction
-                (INVALID_ARGUMENT, ENONCE_ALREADY_USED) => StatusCode::NONCE_ALREADY_USED,
                 (INVALID_ARGUMENT, EACCOUNT_DOES_NOT_EXIST) => {
                     StatusCode::SENDING_ACCOUNT_DOES_NOT_EXIST
                 },
@@ -137,6 +135,8 @@ pub fn convert_prologue_error(
                 (INVALID_STATE, EINSUFFICIENT_BALANCE_FOR_REQUIRED_DEPOSIT) => {
                     StatusCode::INSUFFICIENT_BALANCE_FOR_REQUIRED_DEPOSIT
                 },
+                // Nonce in orderless transaction is already used in a previous transaction
+                (INVALID_ARGUMENT, ENONCE_ALREADY_USED) => StatusCode::NONCE_ALREADY_USED,
                 (category, reason) => {
                     let err_msg = format!("[aptos_vm] Unexpected prologue Move abort: {:?}::{:?} (Category: {:?} Reason: {:?})",
                     location, code, category, reason);

@@ -125,6 +125,7 @@ impl SubmissionWorker {
                                                             });
                     cur.submitted_replay_protectors
                         .insert(req.replay_protector().clone(), (Instant::now(), req.expiration_timestamp_secs()));
+                    info!("(address: {:?}, replay_protector: {:?}, expiration_timestamp_secs: {:?})", req.sender(), req.replay_protector(), req.expiration_timestamp_secs());
                     match req.replay_protector() {
                         ReplayProtector::SequenceNumber(seq_num) => {
                             if cur.submitted_sequence_number_range.is_none() {
