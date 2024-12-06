@@ -134,11 +134,11 @@ Transaction exceeded its allocated max gas
 
 
 
-<a id="0x1_transaction_validation_PROLOGUE_BOTH_SEQ_NUMBE_AND_NONCE_PROVIDED"></a>
+<a id="0x1_transaction_validation_PROLOGUE_BOTH_SEQ_NUMBER_AND_NONCE_PROVIDED"></a>
 
 
 
-<pre><code><b>const</b> <a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_BOTH_SEQ_NUMBE_AND_NONCE_PROVIDED">PROLOGUE_BOTH_SEQ_NUMBE_AND_NONCE_PROVIDED</a>: u64 = 1013;
+<pre><code><b>const</b> <a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_BOTH_SEQ_NUMBER_AND_NONCE_PROVIDED">PROLOGUE_BOTH_SEQ_NUMBER_AND_NONCE_PROVIDED</a>: u64 = 1014;
 </code></pre>
 
 
@@ -240,7 +240,7 @@ important to the semantics of the system.
 
 
 
-<pre><code><b>const</b> <a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_NONCE_ALREADY_USED">PROLOGUE_NONCE_ALREADY_USED</a>: u64 = 1011;
+<pre><code><b>const</b> <a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_NONCE_ALREADY_USED">PROLOGUE_NONCE_ALREADY_USED</a>: u64 = 1012;
 </code></pre>
 
 
@@ -249,7 +249,7 @@ important to the semantics of the system.
 
 
 
-<pre><code><b>const</b> <a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED">PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED</a>: u64 = 1012;
+<pre><code><b>const</b> <a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED">PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED</a>: u64 = 1013;
 </code></pre>
 
 
@@ -396,7 +396,7 @@ Only called during genesis to initialize system resources for this module.
 ) {
     // Question: Is this logic correct?
     <b>let</b> success = <a href="nonce_validation.md#0x1_nonce_validation_check_and_insert_nonce">nonce_validation::check_and_insert_nonce</a>(sender, nonce, txn_expiration_time);
-    <b>assert</b>!(!success, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_NONCE_ALREADY_USED">PROLOGUE_NONCE_ALREADY_USED</a>));
+    <b>assert</b>!(success, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_NONCE_ALREADY_USED">PROLOGUE_NONCE_ALREADY_USED</a>));
 
     <b>if</b> (!<a href="../../aptos-stdlib/../move-stdlib/doc/features.md#0x1_features_transaction_simulation_enhancement_enabled">features::transaction_simulation_enhancement_enabled</a>() ||
         !<a href="transaction_validation.md#0x1_transaction_validation_skip_auth_key_check">skip_auth_key_check</a>(is_simulation, &txn_authentication_key)) {
@@ -441,7 +441,7 @@ Only called during genesis to initialize system resources for this module.
     is_simulation: bool,
 ) {
     <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&txn_sequence_number) || <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&nonce), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED">PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED</a>));
-    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_none">option::is_none</a>(&txn_sequence_number) || <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_none">option::is_none</a>(&nonce), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_BOTH_SEQ_NUMBE_AND_NONCE_PROVIDED">PROLOGUE_BOTH_SEQ_NUMBE_AND_NONCE_PROVIDED</a>));
+    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_none">option::is_none</a>(&txn_sequence_number) || <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_none">option::is_none</a>(&nonce), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="transaction_validation.md#0x1_transaction_validation_PROLOGUE_BOTH_SEQ_NUMBER_AND_NONCE_PROVIDED">PROLOGUE_BOTH_SEQ_NUMBER_AND_NONCE_PROVIDED</a>));
 
     <b>assert</b>!(
         <a href="timestamp.md#0x1_timestamp_now_seconds">timestamp::now_seconds</a>() &lt; txn_expiration_time,

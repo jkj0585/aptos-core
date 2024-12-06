@@ -49,11 +49,11 @@ module aptos_framework::transaction_validation {
     const PROLOGUE_ESEQUENCE_NUMBER_TOO_BIG: u64 = 1008;
     const PROLOGUE_ESECONDARY_KEYS_ADDRESSES_COUNT_MISMATCH: u64 = 1009;
     const PROLOGUE_EFEE_PAYER_NOT_ENABLED: u64 = 1010;
-    const PROLOGUE_NONCE_ALREADY_USED: u64 = 1011;
 
+    const PROLOGUE_NONCE_ALREADY_USED: u64 = 1012;
     // TODO: When we replace sequence and nonce with enum replay protector, we can remove these errors. 
-    const PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED: u64 = 1012;
-    const PROLOGUE_BOTH_SEQ_NUMBE_AND_NONCE_PROVIDED: u64 = 1013;
+    const PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED: u64 = 1013;
+    const PROLOGUE_BOTH_SEQ_NUMBER_AND_NONCE_PROVIDED: u64 = 1014;
 
     /// Only called during genesis to initialize system resources for this module.
     public(friend) fun initialize(
@@ -167,7 +167,7 @@ module aptos_framework::transaction_validation {
         is_simulation: bool,
     ) {
         assert!(option::is_some(&txn_sequence_number) || option::is_some(&nonce), error::invalid_argument(PROLOGUE_NO_REPLAY_PROTECTOR_PROVIDED));
-        assert!(option::is_none(&txn_sequence_number) || option::is_none(&nonce), error::invalid_argument(PROLOGUE_BOTH_SEQ_NUMBE_AND_NONCE_PROVIDED));
+        assert!(option::is_none(&txn_sequence_number) || option::is_none(&nonce), error::invalid_argument(PROLOGUE_BOTH_SEQ_NUMBER_AND_NONCE_PROVIDED));
         
         assert!(
             timestamp::now_seconds() < txn_expiration_time,
