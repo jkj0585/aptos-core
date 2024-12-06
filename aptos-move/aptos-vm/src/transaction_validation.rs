@@ -322,7 +322,7 @@ pub(crate) fn run_script_prologue(
                 MoveValue::Bool(is_simulation),
             ];
             (
-                &APTOS_TRANSACTION_VALIDATION.script_prologue_extended_name,
+                &APTOS_TRANSACTION_VALIDATION.script_prologue_orderless_extension_name,
                 args,
             )
         } else if features.is_transaction_simulation_enhancement_enabled() {
@@ -345,7 +345,7 @@ pub(crate) fn run_script_prologue(
                 MoveValue::Bool(is_simulation),
             ];
             (
-                &APTOS_TRANSACTION_VALIDATION.script_prologue_orderless_extension_name,
+                &APTOS_TRANSACTION_VALIDATION.script_prologue_extended_name,
                 args,
             )
         } else {
