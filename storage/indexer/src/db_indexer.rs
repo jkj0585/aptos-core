@@ -621,42 +621,6 @@ impl DBIndexer {
         }
     }
 
-    pub fn translate_event_v2_to_v1(
-        &self,
-        v2: &ContractEventV2,
-    ) -> Result<Option<ContractEventV1>> {
-        let _timer = TIMER
-            .with_label_values(&["translate_event_v2_to_v1"])
-            .start_timer();
-        if let Some(translator) = self
-            .event_v2_translation_engine
-            .translators
-            .get(v2.type_tag())
-        {
-            let result = translator.translate_event_v2_to_v1(v2, &self.event_v2_translation_engine);
-            match result {
-                Ok(v1) => Ok(Some(v1)),
-                Err(e) => {
-                    // If the token object collection uses ConcurrentSupply, skip the translation and ignore the error.
-                    // This is expected, as the event handle won't be found in either FixedSupply or UnlimitedSupply.
-                    let is_ignored_error = (v2.type_tag() == &*MINT_TYPE
-                        || v2.type_tag() == &*BURN_TYPE)
-                        && e.to_string().contains("resource not found");
-                    if !is_ignored_error {
-                        warn!(
-                            "Failed to translate event: {:?}. Error: {}",
-                            v2,
-                            e.to_string()
-                        );
-                    }
-                    Ok(None)
-                },
-            }
-        } else {
-            Ok(None)
-        }
-    }
-
     pub fn get_ordered_account_transactions(
         &self,
         address: AccountAddress,

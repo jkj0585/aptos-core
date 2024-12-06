@@ -60,12 +60,6 @@ pub enum ReplayProtectionType {
     Nonce,
 }
 
-#[derive(Debug, Copy, Clone)]
-pub enum ReplayProtectionType {
-    SequenceNumber,
-    Nonce,
-}
-
 #[derive(Debug, Clone)]
 pub enum TransactionType {
     CoinTransfer {
@@ -380,6 +374,7 @@ pub async fn create_txn_generator_creator(
                     entry_points,
                     num_modules,
                     use_account_pool,
+                    replay_protection,
                 } => wrap_accounts_pool(
                     Box::new(
                         CustomModulesDelegationGeneratorCreator::new(

@@ -227,7 +227,7 @@ impl TransactionTypeArg {
                 entry_points: vec![(EntryPoints::Nop, 1), (EntryPoints::Republish, 1)],
                 num_modules: module_working_set_size,
                 use_account_pool: sender_use_account_pool,
-                ReplayProtectionType::SequenceNumber,
+                replay_protection: ReplayProtectionType::SequenceNumber,
             },
             TransactionTypeArg::NoOp => {
                 call_custom_module(EntryPoints::Nop, ReplayProtectionType::SequenceNumber)
@@ -302,40 +302,56 @@ impl TransactionTypeArg {
                 EntryPoints::CreateObjectsConflict {
                     num_objects: 100,
                     object_payload_size: 10 * 1024,
-                })
+                },
+                ReplayProtectionType::SequenceNumber,
+            ),
+            TransactionTypeArg::VectorTrimAppendLen3000Size1 => {
+                call_custom_module(EntryPoints::VectorTrimAppend {
+                    vec_len: 3000,
+                    element_len: 1,
+                    index: 100,
+                    repeats: 1000,
+                }, 
+                ReplayProtectionType::SequenceNumber,
+            )
             },
-            TransactionTypeArg::ResourceGroupsGlobalWriteTag1KB => {
+            TransactionTypeArg::VectorRemoveInsertLen3000Size1 => {
+                call_custom_module(EntryPoints::VectorRemoveInsert {
+                    vec_len: 3000,
+                    element_len: 1,
+                    index: 100,
+                    repeats: 1000,
+                },
+                ReplayProtectionType::SequenceNumber,
+            )
+            },
+            TransactionTypeArg::ResourceGroupsGlobalWriteTag1KB =>
                 call_custom_module(EntryPoints::ResourceGroupsGlobalWriteTag {
                     string_length: 1024,
-                    ReplayProtectionType::SequenceNumber,
                 },
-                
+                ReplayProtectionType::SequenceNumber,
             ),
             TransactionTypeArg::ResourceGroupsGlobalWriteAndReadTag1KB => call_custom_module(
                 EntryPoints::ResourceGroupsGlobalWriteAndReadTag {
                     string_length: 1024,
-                    ReplayProtectionType::SequenceNumber,
                 },
-                
+                ReplayProtectionType::SequenceNumber,                
             ),
             TransactionTypeArg::ResourceGroupsSenderWriteTag1KB => call_custom_module(
                 EntryPoints::ResourceGroupsSenderWriteTag {
                     string_length: 1024,
-                    ReplayProtectionType::SequenceNumber,
                 },
-                
+                ReplayProtectionType::SequenceNumber,                
             ),
             TransactionTypeArg::ResourceGroupsSenderMultiChange1KB => call_custom_module(
                 EntryPoints::ResourceGroupsSenderMultiChange {
                     string_length: 1024,
-                    ReplayProtectionType::SequenceNumber,
                 },
-                
+                ReplayProtectionType::SequenceNumber,                
             ),
             TransactionTypeArg::TokenV1NFTMintAndStoreSequential => call_custom_module(
                 EntryPoints::TokenV1MintAndStoreNFTSequential,
-                ReplayProtectionType::SequenceNumber,
-                
+                ReplayProtectionType::SequenceNumber,                
             ),
             TransactionTypeArg::TokenV1NFTMintAndTransferSequential => call_custom_module(
                 EntryPoints::TokenV1MintAndTransferNFTSequential,
