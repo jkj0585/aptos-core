@@ -72,8 +72,9 @@ impl InternalIndexerDBConfig {
 impl Default for InternalIndexerDBConfig {
     fn default() -> Self {
         Self {
-            enable_transaction: false,
-            enable_transaction_summaries: false,
+            // TODO: Reset this to false when landing the code
+            enable_transaction: true,
+            enable_transaction_summaries: true,
             enable_event: false,
             enable_event_v2_translation: false,
             event_v2_translation_ignores_below_version: 0,
